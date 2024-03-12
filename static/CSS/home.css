@@ -1,0 +1,16 @@
+/* CSS file for home.html */
+#buttons-holder{
+    width:100%;
+    padding:5vh 0 5vh 0;
+    box-sizing: border-box;
+    border:1px solid red;
+    display:flex;
+    justify-content: space-evenly;
+}
+.button{
+    width:25%;
+    height:10vh;
+    background-color:red;
+    color:black;
+    font-size: large;
+}

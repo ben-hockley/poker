@@ -1,5 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <head></head>
-    <body></body>
+    <head>
+        <link rel="stylesheet" href="/static/CSS/home.css"> <!--General CSS file, used in every html-->
+        <link rel="stylesheet" href="/static/CSS/poker.css"> <!--CSS specific only to home.html-->
+        <title>Poker</title>
+    </head>
+    <body>
+        <div id="title-holder">
+            <h1>Poker</h1>
+        </div>
+        <div id="buttons-holder">
+            <button class="button" id="play-link">Play</button>
+            <button class="button" id="leaderboard-link">Leaderboard</button>
+            <button class="button" id="instructions-link">How to Play</button>
+        </div>
+        <script src="/static/JS/home.js"></script> <!--add bottom of body element so loads after-->
+    </body>
 </html>
