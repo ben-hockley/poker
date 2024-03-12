@@ -1,7 +1,28 @@
 /* CSS file for home.html */
-
-h1{
-    text-align:center;
+#title-holder{
+    height:min-content;
     width:100%;
-    height:20vh;
+    box-sizing: border-box;
+    background-color: black;
+    color:red;
+    text-align:center;
+}
+h1{
+    padding:5vh 0 5vh 0;
+}
+
+#buttons-holder{
+    width:100%;
+    padding:5vh 0 5vh 0;
+    box-sizing: border-box;
+    border:1px solid red;
+    display:flex;
+    justify-content: space-evenly;
+}
+.button{
+    width:25%;
+    height:10vh;
+    background-color:red;
+    color:black;
+    font-size: large;
 }
