@@ -6,7 +6,15 @@ app = Flask(__name__)
 
 ALLOWED_EXTENTIONS = set(['jpg', 'txt', 'svg', 'png', 'jpeg', 'gif'])
 
+#redirect user to homepage when site loads
+@app.route("/")
+def redirectHome():
+    return redirect("/home")
 
+#load home template when in home subdirectory
+@app.route("/home")
+def renderHome():
+    return render_template("home.html")
 
 
 
