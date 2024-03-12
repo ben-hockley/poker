@@ -1,1 +1,12 @@
-/* general css file for all html files
+/* general css file for all html files */
+#title-holder{
+    height:min-content;
+    width:100%;
+    box-sizing: border-box;
+    background-color: black;
+    color:red;
+    text-align:center;
+}
+h1{
+    padding:5vh 0 5vh 0;
+}

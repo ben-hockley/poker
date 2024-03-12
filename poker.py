@@ -16,6 +16,18 @@ def redirectHome():
 def renderHome():
     return render_template("home.html")
 
+#load game, leaderboard or instructions when buttons clicked on homescreen
+@app.route("/play-poker")
+def renderGame():
+    return render_template("game.html")
+
+@app.route("/leaderboard")
+def renderLeaderboard():
+    return render_template("leaderboard.html")
+
+@app.route("/instructions")
+def renderInstructions():
+    return render_template("instructions.html")
 
 
 
