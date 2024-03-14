@@ -32,6 +32,7 @@ function dealHands(){
         player.push(deck[0])
         deck.splice(0, 1)
         printPlayerCard();
+        window.
 
         cpu1.push(deck[0])
         deck.splice(0, 1)
@@ -62,3 +63,21 @@ function cardFaceDown(container){
     card.setAttribute("src", "/static/img/BACK.png")
     document.getElementById(container).appendChild(card)
 }
+
+//turns go round in circle
+order = ['cpu1', 'cpu2', 'cpu3', 'player']
+var turn = 0 //index of order (cpu1)
+activePlayer = order[turn]
+
+function nextTurn(){
+    document.getElementById(activePlayer).style.backgroundColor = 'White'; //sets old user to white
+    if (turn == 3){
+        turn = 0
+    } else {
+        turn += 1
+    }
+    activePlayer = order[turn]
+    console.log(activePlayer)
+    document.getElementById(activePlayer).style.backgroundColor = 'Green'; //sets new user to green
+}
+

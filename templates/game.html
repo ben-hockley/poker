@@ -7,9 +7,16 @@
     </head>
     <body onload="shuffle()">
         <button onclick="dealHands()">button</button>
+        <button onclick="nextTurn()">nextTurnTest</button>
         <div class="player hand" id="player"></div>
+        <button id="fold">Fold</button>
+        <button id="raise">Raise</button>
+        <button id="check">Check</button>
         <div class="cpu hand" id="cpu1"></div>
         <div class="cpu hand" id="cpu2"></div>
         <div class="cpu hand" id="cpu3"></div>
+        <div id="pokerTable">
+            <img id="cardStack" src="/static/img/BACK.png">
+        </div>
     </body>
 </html>
