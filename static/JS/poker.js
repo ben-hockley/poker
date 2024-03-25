@@ -53,7 +53,8 @@ function cardFaceDown(container){
 
 //turns go round in circle
 order = ['cpu1', 'cpu2', 'cpu3', 'player'];
-var turn = 0 //index of order (cpu1 starts)
+bet = [0, 0, 0, 0]; //value each player has bet, values removed similarly to order array as game progresses.
+var turn = 0 //index of order, bet arrays (cpu1 starts)
 
 // Bank
 var cpu1Chips = 100;
@@ -61,10 +62,6 @@ var cpu2Chips = 100;
 var cpu3Chips = 100;
 var playerChips = 100;
 
-
-
-
-bet = [0, 0, 0, 0]; //value each player has bet, values removed similarly to order array as game progresses.
 
 
 //deal first two cards to each player
@@ -85,6 +82,8 @@ function fold(){
     document.getElementById(order[turn]).style.backgroundColor = 'Red';
     //remove player from the array 'order' so we do not cycle through them in future turns.
     order.splice(turn,1)
+    //remove player from array 'bet' so we do not take more chips from this player.
+    bet.splice(turn,1)
     if (turn == order.length){
         turn = 0;
     }
@@ -107,15 +106,24 @@ function showFirstThreeCards(){
 }
 
 function raise(){
+    bet[turn] += 5; //add bet to player.
     activePlayer = order[turn];
     switch (activePlayer) {
         case 'cpu1':
             cpu1Chips -= 5;
+            document.getElementById('cpu1Bet').innerHTML = bet[turn]; //print bet to poker table.
+            break;
         case 'cpu2':
             cpu2Chips -= 5;
+            document.getElementById('cpu2Bet').innerHTML = bet[turn];
+            break;
         case 'cpu3':
             cpu3Chips -= 5;
+            document.getElementById('cpu3Bet').innerHTML = bet[turn];
+            break;
         case 'player':
             playerChips -= 5;
+            document.getElementById('playerBet').innerHTML = bet[turn];
+            break;
     }
 }
