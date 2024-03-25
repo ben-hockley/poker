@@ -52,8 +52,20 @@ function cardFaceDown(container){
 }
 
 //turns go round in circle
-order = ['cpu1', 'cpu2', 'cpu3', 'player']
-var turn = 0 //index of order (cpu1)
+order = ['cpu1', 'cpu2', 'cpu3', 'player'];
+var turn = 0 //index of order (cpu1 starts)
+
+// Bank
+var cpu1Chips = 100;
+var cpu2Chips = 100;
+var cpu3Chips = 100;
+var playerChips = 100;
+
+
+
+
+bet = [0, 0, 0, 0]; //value each player has bet, values removed similarly to order array as game progresses.
+
 
 //deal first two cards to each player
 //player cards visible (face up)
@@ -87,8 +99,23 @@ function check(){
     }
     document.getElementById(order[turn]).style.backgroundColor = 'Green';
 }
+
 function showFirstThreeCards(){
     cardFaceUp("cardsOnTheTable");
     cardFaceUp("cardsOnTheTable");
     cardFaceUp("cardsOnTheTable");
+}
+
+function raise(){
+    activePlayer = order[turn];
+    switch (activePlayer) {
+        case 'cpu1':
+            cpu1Chips -= 5;
+        case 'cpu2':
+            cpu2Chips -= 5;
+        case 'cpu3':
+            cpu3Chips -= 5;
+        case 'player':
+            playerChips -= 5;
+    }
 }
