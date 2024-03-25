@@ -87,3 +87,8 @@ function check(){
     }
     document.getElementById(order[turn]).style.backgroundColor = 'Green';
 }
+function showFirstThreeCards(){
+    cardFaceUp("cardsOnTheTable");
+    cardFaceUp("cardsOnTheTable");
+    cardFaceUp("cardsOnTheTable");
+}

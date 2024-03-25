@@ -45,7 +45,7 @@
     position:absolute;
     height:40%;
     width:8%;
-    left:46%;
+    left:15%;
     top:30%;
 }
 #check{
@@ -62,4 +62,12 @@
     position:fixed;
     bottom:10%;
     right:35%;
+}
+#cardsOnTheTable{
+    position:absolute;
+    height:40%;
+    width:50%;
+    left:25%;
+    top:30%;
+    border:1px solid white;
 }
