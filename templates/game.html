@@ -7,11 +7,11 @@
     </head>
     <body onload="shuffle()">
         <button onclick="dealHands()">button</button>
-        <button onclick="nextTurn()">nextTurnTest</button>
+        <button onclick="stayIn()">nextTurnTest</button>
         <div class="player hand" id="player"></div>
-        <button id="fold">Fold</button>
-        <button id="raise">Raise</button>
-        <button id="check">Check</button>
+        <button id="fold" onclick="fold()">Fold</button>
+        <button id="raise" onclick="raise()">Raise</button>
+        <button id="check" onclick="check()">Check</button>
         <div class="cpu hand" id="cpu1"></div>
         <div class="cpu hand" id="cpu2"></div>
         <div class="cpu hand" id="cpu3"></div>

@@ -8,13 +8,13 @@ deck = [
 
 //4 player game
 //Arrays for player and CPU hands
-player = [];
-cpu1 = [];
-cpu2 = [];
-cpu3 = [];
+playerHand = [];
+cpu1Hand = [];
+cpu2Hand = [];
+cpu3Hand = [];
 
-//shuffles deck
-function shuffle(){
+//shuffles deck on page load.
+function shuffle(){ 
     shuffledDeck = []
     while (deck.length > 0){
         randomIndex = Math.floor(Math.random() * deck.length);
@@ -25,59 +25,65 @@ function shuffle(){
     deck = shuffledDeck;
 }
 
-//deal first two cards
-function dealHands(){
-    //logic
-    for (i=0;i<2;i++){
-        player.push(deck[0])
-        deck.splice(0, 1)
-        printPlayerCard();
-        window.
+//deals a card face up
+function cardFaceUp(container){
+    //get card on top of deck, and remove it from the deck.
+    cardDealt = deck[0];
+    deck.splice(0,1);
 
-        cpu1.push(deck[0])
-        deck.splice(0, 1)
-        cardFaceDown("cpu1");
-
-        cpu2.push(deck[0])
-        deck.splice(0, 1)
-        cardFaceDown("cpu2");
-
-        cpu3.push(deck[0])
-        deck.splice(0, 1)
-        cardFaceDown("cpu3");
-    }
-}
-
-//shows a card face up
-function printPlayerCard(){
     var card = document.createElement('img');
-    card.className = 'cardImg'
-    card.setAttribute("src", "/static/img/"+player[player.length-1]+".png")
-    document.getElementById("player").appendChild(card)
+    card.className = 'cardImg';
+    card.id = cardDealt;
+    card.setAttribute("src","/static/img/"+cardDealt+".png");
+    document.getElementById(container).appendChild(card);
+
 }
 
-//puts a card face down
+//deals a card face down
 function cardFaceDown(container){
+    cardDealt = deck[0];
+    deck.splice(0,1);
+
     var card = document.createElement('img');
-    card.className = 'cardImg'
-    card.setAttribute("src", "/static/img/BACK.png")
-    document.getElementById(container).appendChild(card)
+    card.className = 'cardImg';
+    card.id = cardDealt;
+    card.setAttribute("src", "/static/img/BACK.png");
+    document.getElementById(container).appendChild(card);
 }
 
 //turns go round in circle
 order = ['cpu1', 'cpu2', 'cpu3', 'player']
 var turn = 0 //index of order (cpu1)
-activePlayer = order[turn]
 
-function nextTurn(){
-    document.getElementById(activePlayer).style.backgroundColor = 'White'; //sets old user to white
-    if (turn == 3){
-        turn = 0
-    } else {
-        turn += 1
+//deal first two cards to each player
+//player cards visible (face up)
+//CPU cards hidden (face down)
+function dealHands(){
+    for (i=0;i<2;i++){
+        cardFaceUp("player");
+        cardFaceDown("cpu1");
+        cardFaceDown("cpu2");
+        cardFaceDown("cpu3");
     }
-    activePlayer = order[turn]
-    console.log(activePlayer)
-    document.getElementById(activePlayer).style.backgroundColor = 'Green'; //sets new user to green
 }
 
+//player controls
+function fold(){
+    //set players hand to red, to show they have folded
+    document.getElementById(order[turn]).style.backgroundColor = 'Red';
+    //remove player from the array 'order' so we do not cycle through them in future turns.
+    order.splice(turn,1)
+    if (turn == order.length){
+        turn = 0;
+    }
+    document.getElementById(order[turn]).style.backgroundColor='Green';
+}
+
+function check(){
+    document.getElementById(order[turn]).style.backgroundColor = 'White';
+    turn += 1;
+    if (turn == order.length){
+        turn = 0;
+    }
+    document.getElementById(order[turn]).style.backgroundColor = 'Green';
+}
