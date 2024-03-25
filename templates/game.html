@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/CSS/game.css">
+        <link rel="stylesheet" href="/static/CSS/poker.css">
+        <script src="/static/JS/poker.js"></script>
+    </head>
+    <body onload="shuffle()">
+        <button onclick="dealHands()">button</button>
+        <button onclick="showFirstThreeCards()">showCardsTest1</button>
+        <div class="player hand" id="player"></div>
+        <button id="fold" onclick="fold()">Fold</button>
+        <button id="raise" onclick="raise()">Raise</button>
+        <button id="check" onclick="check()">Check</button>
+        <div class="cpu hand" id="cpu1"></div>
+        <div class="cpu hand" id="cpu2"></div>
+        <div class="cpu hand" id="cpu3"></div>
+        <div id="pokerTable">
+            <img id="cardStack" src="/static/img/BACK.png">
+            <div id="cardsOnTheTable"></div>
+        </div>
+    </body>
+</html>
