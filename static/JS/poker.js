@@ -112,18 +112,22 @@ function raise(){
         case 'cpu1':
             cpu1Chips -= 5;
             document.getElementById('cpu1Bet').innerHTML = bet[turn]; //print bet to poker table.
+            document.getElementById('cpu1Chips').innerHTML = cpu1Chips; //print chips to window
             break;
         case 'cpu2':
             cpu2Chips -= 5;
             document.getElementById('cpu2Bet').innerHTML = bet[turn];
+            document.getElementById('cpu2Chips').innerHTML = cpu2Chips;
             break;
         case 'cpu3':
             cpu3Chips -= 5;
             document.getElementById('cpu3Bet').innerHTML = bet[turn];
+            document.getElementById('cpu3Chips').innerHTML = cpu3Chips;
             break;
         case 'player':
             playerChips -= 5;
             document.getElementById('playerBet').innerHTML = bet[turn];
+            document.getElementById('playerChips').innerHTML = playerChips;
             break;
     }
 }
