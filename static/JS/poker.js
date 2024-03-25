@@ -113,21 +113,42 @@ function raise(){
             cpu1Chips -= 5;
             document.getElementById('cpu1Bet').innerHTML = bet[turn]; //print bet to poker table.
             document.getElementById('cpu1Chips').innerHTML = cpu1Chips; //print chips to window
+            
+            checkBetValue('cpu1Bet');
+
             break;
         case 'cpu2':
             cpu2Chips -= 5;
             document.getElementById('cpu2Bet').innerHTML = bet[turn];
             document.getElementById('cpu2Chips').innerHTML = cpu2Chips;
+
+            checkBetValue('cpu2Bet');
+
             break;
         case 'cpu3':
             cpu3Chips -= 5;
             document.getElementById('cpu3Bet').innerHTML = bet[turn];
             document.getElementById('cpu3Chips').innerHTML = cpu3Chips;
+
+            checkBetValue('cpu3Bet');
+
             break;
         case 'player':
             playerChips -= 5;
             document.getElementById('playerBet').innerHTML = bet[turn];
             document.getElementById('playerChips').innerHTML = playerChips;
+
+            checkBetValue('playerBet');
+
             break;
+    }
+}
+
+//checks to see if all players have matched the bet
+function checkBetValue(textID){
+    if (bet[turn] == Math.max(...bet)){
+        document.getElementById(textID).style.color = 'Green';
+    } else {
+        document.getElementById(textID).style.color = 'Red';
     }
 }

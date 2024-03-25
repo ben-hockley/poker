@@ -20,12 +20,14 @@
     position:fixed;
     top:40%;
     left:0;
+    background-color: green; /* cpu1 starts */
 }
 #player{
     position: fixed;
     bottom:0;
     left:40%;
 }
+
 .cardImg{
     height:100%;
     width:20%;
@@ -48,6 +50,7 @@
     left:15%;
     top:30%;
 }
+
 #check{
     position:fixed;
     bottom:0;
@@ -63,6 +66,7 @@
     bottom:10%;
     right:35%;
 }
+
 #cardsOnTheTable{
     position:absolute;
     height:40%;
@@ -71,6 +75,7 @@
     top:30%;
     border:1px solid white;
 }
+
 .bet{
     color:white;
     border:1px solid white;
@@ -97,6 +102,7 @@
     bottom:0;
     left:45%;
 }
+
 .chips{
     color:black;
     border:1px solid black;
