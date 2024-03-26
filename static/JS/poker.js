@@ -12,6 +12,7 @@ playerHand = [];
 cpu1Hand = [];
 cpu2Hand = [];
 cpu3Hand = [];
+cardsOnTable = [];
 
 //shuffles deck on page load.
 function shuffle(){ 
@@ -26,7 +27,7 @@ function shuffle(){
 }
 
 //deals a card face up
-function cardFaceUp(container){
+function cardFaceUp(container, arrayName){
     //get card on top of deck, and remove it from the deck.
     cardDealt = deck[0];
     deck.splice(0,1);
@@ -34,19 +35,20 @@ function cardFaceUp(container){
     var card = document.createElement('img');
     card.className = 'cardImg';
     card.id = cardDealt;
+    arrayName.push(cardDealt);
     card.setAttribute("src","/static/img/"+cardDealt+".png");
     document.getElementById(container).appendChild(card);
-
 }
 
 //deals a card face down
-function cardFaceDown(container){
+function cardFaceDown(container, arrayName){
     cardDealt = deck[0];
     deck.splice(0,1);
 
     var card = document.createElement('img');
     card.className = 'cardImg';
     card.id = cardDealt;
+    arrayName.push(cardDealt);
     card.setAttribute("src", "/static/img/BACK.png");
     document.getElementById(container).appendChild(card);
 }
@@ -74,10 +76,10 @@ var playerChips = 90; //big blind (10)
 //CPU cards hidden (face down)
 function dealHands(){
     for (i=0;i<2;i++){ //deal two cards to each player
-        cardFaceUp("player");
-        cardFaceDown("cpu1");
-        cardFaceDown("cpu2");
-        cardFaceDown("cpu3");
+        cardFaceUp("player",playerHand);
+        cardFaceDown("cpu1",cpu1Hand);
+        cardFaceDown("cpu2",cpu2Hand);
+        cardFaceDown("cpu3",cpu3Hand);
     }
 }
 function printBetsandChips(){
@@ -238,17 +240,17 @@ function applyGameStage(){
 
 //Game stage 1
 function showFirstThreeCards(){
-    cardFaceUp("cardsOnTheTable");
-    cardFaceUp("cardsOnTheTable");
-    cardFaceUp("cardsOnTheTable");
+    cardFaceUp("cardsOnTheTable",cardsOnTable);
+    cardFaceUp("cardsOnTheTable",cardsOnTable);
+    cardFaceUp("cardsOnTheTable",cardsOnTable);
     roundsPlayed = 0; //resets rounds played
 }
 function showFourthCard(){
-    cardFaceUp("cardsOnTheTable");
+    cardFaceUp("cardsOnTheTable",cardsOnTable);
     roundsPlayed = 0;
 }
 function showFifthCard(){
-    cardFaceUp("cardsOnTheTable");
+    cardFaceUp("cardsOnTheTable",cardsOnTable);
     roundsPlayed = 0;
 }
 function revealCards(){
