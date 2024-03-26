@@ -393,6 +393,22 @@ function findBestCombo(seventhStreet){
         handValue = 6;
     }
     //Straight? = 5
+    else if (
+        Math.min(...numbers.slice(0,5)) == 1|| //A1234
+        Math.min(...numbers.slice(1,6)) == 1|| //12345
+        Math.min(...numbers.slice(2,7)) == 1|| //23456
+        Math.min(...numbers.slice(3,8)) == 1|| //34567
+        Math.min(...numbers.slice(4,9)) == 1|| //45678
+        Math.min(...numbers.slice(5,10)) == 1|| //56789
+        Math.min(...numbers.slice(6,11)) == 1|| //6789T
+        Math.min(...numbers.slice(7,12)) == 1|| //789TJ
+        Math.min(...numbers.slice(8,13)) == 1|| //89TJQ
+        Math.min(...numbers.slice(9,14)) == 1 || //9TJQK
+        (Math.min(...numbers.slice(10,14)) == 1 && numbers[0] > 0) //TJQKA 
+        ){
+        console.log('Straight!');
+        handValue = 5;
+    }
     //Three of a kind? = 4
     else if (Math.max(...numbers) == 3){
         console.log('3 of a kind!');
