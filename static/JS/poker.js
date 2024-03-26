@@ -90,13 +90,19 @@ function fold(){
     document.getElementById(order[turn]).style.backgroundColor='Green';
 }
 
+
+//implement a test to force user to either match the highest bet or fold
 function check(){
-    document.getElementById(order[turn]).style.backgroundColor = 'White';
+    if (bet[turn] >= Math.max(...bet)){
+        document.getElementById(order[turn]).style.backgroundColor = 'White';
     turn += 1;
     if (turn == order.length){
         turn = 0;
     }
     document.getElementById(order[turn]).style.backgroundColor = 'Green';
+    } else {
+        alert("please match the bet or fold");
+    }
 }
 
 function showFirstThreeCards(){
