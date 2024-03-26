@@ -217,12 +217,16 @@ function applyGameStage(){
     switch (gameStage){
         case 1:
             showFirstThreeCards();
+            break;
         case 2:
             showFourthCard();
+            break;
         case 3:
             showFifthCard();
+            break;
         case 4:
             revealCards();
+            break;
             //end of game
     }
 }
