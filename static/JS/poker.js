@@ -24,6 +24,7 @@ function shuffle(){
     }
     console.log(shuffledDeck);
     deck = shuffledDeck;
+    document.getElementById('playButton').style.display('block');
 }
 
 //deals a card face up
@@ -104,6 +105,7 @@ function printBetsandChips(){
 function setupGame(){
     dealHands();
     printBetsandChips();
+    document.getElementById('playButton').style.display = 'none'; //hide play button
 }
 
 
