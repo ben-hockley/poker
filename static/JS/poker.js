@@ -54,7 +54,8 @@ function cardFaceDown(container){
 //turns go round in circle
 order = ['cpu1', 'cpu2', 'cpu3', 'player'];
 bet = [0, 0, 5, 10]; //value each player has bet, values removed similarly to order array as game progresses.
-var turn = 0 //index of order, bet arrays (cpu1 starts)
+var turn = 0; //index of order, bet arrays (cpu1 starts)
+var roundsPlayed = 0; //counts rounds played 
 
 // Bank
 var cpu1Chips = 100; //first to play
@@ -100,6 +101,7 @@ function check(){
         turn = 0;
     }
     document.getElementById(order[turn]).style.backgroundColor = 'Green';
+    roundsPlayed += 0.25;
     nextRoundMaybe(); //checks if all bets match and if they do, shows the next card/s.
     } else {
         alert("please match the bet or fold");
@@ -110,6 +112,7 @@ function showFirstThreeCards(){
     cardFaceUp("cardsOnTheTable");
     cardFaceUp("cardsOnTheTable");
     cardFaceUp("cardsOnTheTable");
+    roundsPlayed = 0; //resets rounds played
 }
 
 function raise(){
@@ -182,7 +185,7 @@ function nextRoundMaybe(){
     function checkBetsMatch(betAmount){
         return betAmount == Math.max(...bet) //checks each bet matches the highest bet
     }
-    if (bet.every(checkBetsMatch)){
+    if (bet.every(checkBetsMatch) && roundsPlayed >= 1){ //checks whether all players have been yet.
         showFirstThreeCards();
     }
 }

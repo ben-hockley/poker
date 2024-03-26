@@ -6,7 +6,6 @@
         <script src="/static/JS/poker.js"></script>
     </head>
     <body onload="shuffle()">
-        <button onclick="dealHands()">button</button>
         <button onclick="showFirstThreeCards()">showCardsTest1</button>
         <button onclick="nextRound()">showCardsTest1</button>
         <div class="player hand" id="player"></div>
@@ -23,6 +22,7 @@
         <div class="chips" id="playerChips"></div>
 
         <div id="pokerTable">
+            <button onclick="dealHands()">Play</button>
             <img id="cardStack" src="/static/img/BACK.png">
             <div id="cardsOnTheTable"></div>
 
