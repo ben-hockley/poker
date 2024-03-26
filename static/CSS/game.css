@@ -20,12 +20,14 @@
     position:fixed;
     top:40%;
     left:0;
+    background-color: green; /* cpu1 starts */
 }
 #player{
     position: fixed;
     bottom:0;
     left:40%;
 }
+
 .cardImg{
     height:100%;
     width:20%;
@@ -48,6 +50,7 @@
     left:15%;
     top:30%;
 }
+
 #check{
     position:fixed;
     bottom:0;
@@ -63,6 +66,7 @@
     bottom:10%;
     right:35%;
 }
+
 #cardsOnTheTable{
     position:absolute;
     height:40%;
@@ -70,4 +74,58 @@
     left:25%;
     top:30%;
     border:1px solid white;
+}
+
+.bet{
+    color:white;
+    border:1px solid white;
+    position:absolute;
+    height:10%;
+    width:10%;
+    text-align: center;
+    font-size: x-large;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#cpu1Bet{
+    top:40%;
+    left:0;
+}
+#cpu2Bet{
+    top:0;
+    left:45%;
+}
+#cpu3Bet{
+    top:40%;
+    right:0;
+}
+#playerBet{
+    bottom:0;
+    left:45%;
+}
+
+.chips{
+    color:black;
+    border:1px solid black;
+    position:fixed;
+    height:5%;
+    width:10%;
+    text-align:center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: x-large;
+}
+#cpu1Chips{
+    top:65%;
+    left:5%;
+}
+#cpu2Chips{
+    top:7.5%;
+    left:27.5%;
+}
+#cpu3Chips{
+    top:65%;
+    right:5%;
+}
+#playerChips{
+    bottom:7.5%;
+    left:27.5%;
 }

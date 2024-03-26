@@ -6,8 +6,6 @@
         <script src="/static/JS/poker.js"></script>
     </head>
     <body onload="shuffle()">
-        <button onclick="dealHands()">button</button>
-        <button onclick="showFirstThreeCards()">showCardsTest1</button>
         <div class="player hand" id="player"></div>
         <button id="fold" onclick="fold()">Fold</button>
         <button id="raise" onclick="raise()">Raise</button>
@@ -15,9 +13,21 @@
         <div class="cpu hand" id="cpu1"></div>
         <div class="cpu hand" id="cpu2"></div>
         <div class="cpu hand" id="cpu3"></div>
+
+        <div class="chips" id="cpu1Chips"></div>
+        <div class="chips" id="cpu2Chips"></div>
+        <div class="chips" id="cpu3Chips"></div>
+        <div class="chips" id="playerChips"></div>
+
         <div id="pokerTable">
+            <button onclick="setupGame()">Play</button>
             <img id="cardStack" src="/static/img/BACK.png">
             <div id="cardsOnTheTable"></div>
+
+            <div class="bet" id="cpu1Bet"></div>
+            <div class="bet" id="cpu2Bet"></div>
+            <div class="bet" id="cpu3Bet"></div>
+            <div class="bet" id="playerBet"></div>
         </div>
     </body>
 </html>
