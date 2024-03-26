@@ -117,7 +117,7 @@ function fold(){
         turn = 0;
     }
     document.getElementById(order[turn]).style.backgroundColor='Green';
-    roundsPlayedIncrementer = (1 / order.length) + 0.01;
+    roundsPlayed += roundsPlayedIncrementer;
 }
 
 
@@ -215,6 +215,7 @@ function nextRoundMaybe(){
 
 var gameStage = 0;
 function applyGameStage(){
+    roundsPlayedIncrementer = (1/order.length) + 0.01;
     switch (gameStage){
         case 1:
             showFirstThreeCards();
