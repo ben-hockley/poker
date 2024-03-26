@@ -266,3 +266,151 @@ function putBetsInBank(){
     document.getElementById('bankBalance').innerHTML = bankBalance;
     document.querySelectorAll('.bet').forEach(e=> e.innerHTML = 0);
 }
+
+function evaluateHand(){
+    for (i=0;i<order.length;i++){
+        if (order[i] == 'player'){
+            player7Cards = playerHand.concat(cardsOnTable);
+            findBestCombo(player7Cards);
+            console.log("player");
+        } else if(order[i] == 'cpu1'){
+            cpu17Cards = cpu1Hand.concat(cardsOnTable);
+            findBestCombo(cpu17Cards);
+            console.log("cpu1");
+        } else if(order[i] == 'cpu2'){
+            cpu27Cards = cpu2Hand.concat(cardsOnTable);
+            findBestCombo(cpu27Cards);
+            console.log("cpu2");
+        } else {
+            cpu37Cards = cpu3Hand.concat(cardsOnTable);
+            findBestCombo(cpu37Cards);
+            console.log("cpu3");
+        }
+    }
+}
+
+
+function findBestCombo(seventhStreet){
+    diamonds = 0;
+    hearts = 0;
+    clubs = 0;
+    spades = 0;
+
+    ace = 0;
+    two = 0;
+    three = 0;
+    four = 0;
+    five = 0;
+    six = 0;
+    seven = 0;
+    eight = 0;
+    nine = 0;
+    ten = 0;
+    jack = 0;
+    queen = 0;
+    king = 0;
+
+    for (j=0;j<7;j++){
+        switch (seventhStreet[j][0]){
+            case 'A':
+                ace += 1;
+                break;
+            case '2':
+                two += 1;
+                break;
+            case '3':
+                three += 1;
+                break;
+            case '4':
+                four += 1;
+                break;
+            case '5':
+                five += 1;
+                break;
+            case '6':
+                six += 1;
+                break;
+            case '7':
+                seven += 1;
+                break;
+            case '8':
+                eight += 1;
+                break;
+            case '9':
+                nine += 1;
+                break;
+            case 'T':
+                ten += 1;
+                break;
+            case 'J':
+                jack += 1;
+                break;
+            case 'Q':
+                queen += 1;
+                break;
+            case 'K':
+                king += 1;
+                break;
+        }
+        switch (seventhStreet[j][1]){
+            case 'D':
+                diamonds += 1;
+                break;
+            case 'H':
+                hearts += 1;
+                break;
+            case 'C':
+                clubs += 1;
+                break;
+            case 'S':
+                spades += 1;
+                break;
+        }
+    }
+
+    suits = [diamonds,hearts,clubs,spades];
+    numbers = [ace,two,three,four,five,six,seven,eight,nine,ten,jack,queen,king];
+    console.log(suits);
+    console.log(numbers);
+
+    var handValue; //Royal Flush = 10, Straight Flush = 9 etc.
+
+    //Royal Flush ? = 10
+    //Straight Flush? = 9
+    //Four of a kind? = 8
+    if (Math.max(...numbers) == 4){
+        console.log('4 of a kind!');
+        handValue = 8;
+    } 
+    //Full house? = 7
+    else if (Math.max(...numbers) == 3 && numbers.includes(2)){
+        console.log('Full House!');
+        handValue = 7;
+    }
+    //Flush? = 6
+    else if (Math.max(...suits) == 5){
+        console.log('Flush!');
+        handValue = 6;
+    }
+    //Straight? = 5
+    //Three of a kind? = 4
+    else if (Math.max(...numbers) == 3){
+        console.log('3 of a kind!');
+        handValue = 4;
+    }
+    //Two pair? = 3
+    else if (Math.max(...numbers) == 2 && numbers.findIndex(x=>x==2) != numbers.findLastIndex(x=>x==2)){
+        console.log('Two Pair!');
+        handValue = 3;
+    }
+    //Pair? = 2
+    else if (Math.max(...numbers) == 2){
+        console.log('Pair!');
+        handValue = 2;
+    }
+    //High Card = 1
+    else {
+        console.log('High Card!')
+        handValue = 1;
+    }
+}
