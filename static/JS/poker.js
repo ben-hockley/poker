@@ -60,6 +60,8 @@ var roundsPlayedIncrementer = 0.25; //value to add to rounds played upon check (
 
 
 // Bank
+var bankBalance = 0;
+
 var cpu1Chips = 100; //first to play
 var cpu2Chips = 100;
 var cpu3Chips = 95; //small blind (5)
@@ -215,7 +217,8 @@ function nextRoundMaybe(){
 
 var gameStage = 0;
 function applyGameStage(){
-    roundsPlayedIncrementer = (1/order.length) + 0.01;
+    roundsPlayedIncrementer = (1/order.length) + 0.01; //add 0.01 for 1/3 stage so roundsPlayed passes 1.
+    putBetsInBank();
     switch (gameStage){
         case 1:
             showFirstThreeCards();
@@ -250,4 +253,14 @@ function showFifthCard(){
 }
 function revealCards(){
     //not sure on this one yet
+}
+
+function putBetsInBank(){
+    for (i=0;i<bet.length;i++){
+        bankBalance += bet[i];
+        bet[i] = 0;
+    }
+    console.log(bankBalance);
+    document.getElementById('bankBalance').innerHTML = bankBalance;
+    document.querySelectorAll('.bet').forEach(e=> e.innerHTML = 0);
 }
