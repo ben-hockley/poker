@@ -376,9 +376,18 @@ function findBestCombo(seventhStreet){
     var handValue; //Royal Flush = 10, Straight Flush = 9 etc.
 
     //Royal Flush ? = 10
+    if (
+        seventhStreet.includes('AD','KD','QD','JD','TD')||
+        seventhStreet.includes('AH','KH','QH','JH','TH')||
+        seventhStreet.includes('AC','KC','QC','JC','TC')||
+        seventhStreet.includes('AS','KS','QS','JS','TS')
+    ){
+        console.log('Royal Flush!');
+        handValue = 10;
+    }
     //Straight Flush? = 9
     //Four of a kind? = 8
-    if (Math.max(...numbers) == 4){
+    else if (Math.max(...numbers) == 4){
         console.log('4 of a kind!');
         handValue = 8;
     } 
