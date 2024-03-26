@@ -117,6 +117,7 @@ function fold(){
         turn = 0;
     }
     document.getElementById(order[turn]).style.backgroundColor='Green';
+    roundsPlayedIncrementer = (1 / order.length) + 0.01;
 }
 
 
