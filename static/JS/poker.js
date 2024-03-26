@@ -397,7 +397,7 @@ function findBestCombo(seventhStreet){
         handValue = 7;
     }
     //Flush? = 6
-    else if (Math.max(...suits) == 5){
+    else if (Math.max(...suits) >= 5){
         console.log('Flush!');
         handValue = 6;
     }
