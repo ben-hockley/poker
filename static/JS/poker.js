@@ -69,13 +69,39 @@ var playerChips = 90; //big blind (10)
 //player cards visible (face up)
 //CPU cards hidden (face down)
 function dealHands(){
-    for (i=0;i<2;i++){
+    for (i=0;i<2;i++){ //deal two cards to each player
         cardFaceUp("player");
         cardFaceDown("cpu1");
         cardFaceDown("cpu2");
         cardFaceDown("cpu3");
     }
 }
+function printBetsandChips(){
+    //print chips
+    document.getElementById('cpu1Chips').innerHTML = cpu1Chips;
+    document.getElementById('cpu2Chips').innerHTML = cpu2Chips;
+    document.getElementById('cpu3Chips').innerHTML = cpu3Chips;
+    document.getElementById('playerChips').innerHTML = playerChips;
+
+    //print bets
+    for (i=0;i<4;i++){
+        document.getElementsByClassName('bet')[i].innerHTML = bet[i];
+        //color code the bets.
+        checkBetValue('cpu1','cpu1Bet');
+        checkBetValue('cpu2','cpu2Bet');
+        checkBetValue('cpu3','cpu3Bet');
+        checkBetValue('player','playerBet');
+    }
+}
+
+//setup game by dealing hands and printing bets and chips to the table
+function setupGame(){
+    dealHands();
+    printBetsandChips();
+}
+
+
+
 
 //player controls
 function fold(){
@@ -186,6 +212,15 @@ function nextRoundMaybe(){
         return betAmount == Math.max(...bet) //checks each bet matches the highest bet
     }
     if (bet.every(checkBetsMatch) && roundsPlayed >= 1){ //checks whether all players have been yet.
-        showFirstThreeCards();
+        gameStage += 1; //next game stage
+        applyGameStage();
+    }
+}
+
+var gameStage = 0;
+function applyGameStage(){
+    switch (gameStage){
+        case 1:
+            showFirstThreeCards();
     }
 }
