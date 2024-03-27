@@ -257,7 +257,8 @@ function showFifthCard(){
 }
 function revealCards(){
     showCards(); 
-    evaluateHands();
+    [cpu1,cpu2,cpu3,player] = evaluateHands();
+    getWinner(cpu1,cpu2,cpu3,player);
 }
 
 function putBetsInBank(){
@@ -294,7 +295,7 @@ function evaluateHands(){
             cpu3HandValue = findBestCombo(cpu37Cards);
         }
     }
-    getWinner(cpu1HandValue,cpu2HandValue,cpu3HandValue,playerHandValue);
+    return [cpu1HandValue,cpu2HandValue,cpu3HandValue,playerHandValue];
 }
 
 function findBestCombo(seventhStreet){
