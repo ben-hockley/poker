@@ -273,7 +273,7 @@ function putBetsInBank(){
 
 function evaluateHands(){
 
-    //player's hand value defaulted to 0 if they have folded
+    //player's hand value defaulted to 0 (it will stay this way if folded)
     playerHandValue = 0;
     cpu1HandValue = 0;
     cpu2HandValue = 0;
@@ -377,7 +377,7 @@ function findBestCombo(seventhStreet){
     }
 
     suits = [diamonds,hearts,clubs,spades];
-    numbers = [ace,two,three,four,five,six,seven,eight,nine,ten,jack,queen,king];
+    numbers = [two,three,four,five,six,seven,eight,nine,ten,jack,queen,king,ace];
     console.log(suits);
     console.log(numbers);
 
@@ -412,17 +412,16 @@ function findBestCombo(seventhStreet){
     }
     //Straight? = 5
     else if (
-        Math.min(...numbers.slice(0,5)) == 1|| //A1234
-        Math.min(...numbers.slice(1,6)) == 1|| //12345
-        Math.min(...numbers.slice(2,7)) == 1|| //23456
-        Math.min(...numbers.slice(3,8)) == 1|| //34567
-        Math.min(...numbers.slice(4,9)) == 1|| //45678
-        Math.min(...numbers.slice(5,10)) == 1|| //56789
-        Math.min(...numbers.slice(6,11)) == 1|| //6789T
-        Math.min(...numbers.slice(7,12)) == 1|| //789TJ
-        Math.min(...numbers.slice(8,13)) == 1|| //89TJQ
-        Math.min(...numbers.slice(9,14)) == 1 || //9TJQK
-        (Math.min(...numbers.slice(10,14)) == 1 && numbers[0] > 0) //TJQKA 
+        Math.min(...numbers.slice(0,5)) == 1|| //23456
+        Math.min(...numbers.slice(1,6)) == 1|| //34567
+        Math.min(...numbers.slice(2,7)) == 1|| //45678
+        Math.min(...numbers.slice(3,8)) == 1|| //56789
+        Math.min(...numbers.slice(4,9)) == 1|| //6789T
+        Math.min(...numbers.slice(5,10)) == 1|| //789TJ
+        Math.min(...numbers.slice(6,11)) == 1|| //89TJQ
+        Math.min(...numbers.slice(7,12)) == 1|| //9TJQK
+        Math.min(...numbers.slice(8,13)) == 1|| //TJQKA
+        (Math.min(...numbers.slice(0,4)) == 1 && numbers[12] > 0) //A2345
         ){
         console.log('Straight!');
         handValue = 5;
