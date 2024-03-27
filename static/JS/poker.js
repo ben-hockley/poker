@@ -256,6 +256,7 @@ function showFifthCard(){
     roundsPlayed = 0;
 }
 function revealCards(){
+    showCards(); 
     evaluateHands();
 }
 
@@ -292,9 +293,8 @@ function evaluateHands(){
             cpu37Cards = cpu3Hand.concat(cardsOnTable);
             cpu3HandValue = findBestCombo(cpu37Cards);
         }
-        getWinner();
     }
-
+    getWinner(cpu1HandValue,cpu2HandValue,cpu3HandValue,playerHandValue);
 }
 
 function findBestCombo(seventhStreet){
@@ -382,17 +382,18 @@ function findBestCombo(seventhStreet){
 
     var handValue; //Royal Flush = 10, Straight Flush = 9 etc.
 
-    //Royal Flush ? = 10
+    //Royal Flush ? = 10 //this is faulty, fix it.
     if (
-        seventhStreet.includes('AD','KD','QD','JD','TD')||
-        seventhStreet.includes('AH','KH','QH','JH','TH')||
-        seventhStreet.includes('AC','KC','QC','JC','TC')||
-        seventhStreet.includes('AS','KS','QS','JS','TS')
+        //seventhStreet.includes('AD','KD','QD','JD','TD')||
+        //seventhStreet.includes('AH','KH','QH','JH','TH')||
+        //seventhStreet.includes('AC','KC','QC','JC','TC')||
+        //seventhStreet.includes('AS','KS','QS','JS','TS')
+        Math.max(...numbers) == 20 //impossible placefiller statement
     ){
         console.log('Royal Flush!');
         handValue = 10;
     }
-    //Straight Flush? = 9
+    //Straight Flush? = 9 => Not sure on best way to do this.
     //Four of a kind? = 8
     else if (Math.max(...numbers) == 4){
         console.log('4 of a kind!');
@@ -457,34 +458,36 @@ function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as pa
         switch (handValues.indexOf(bestCombo)){
             case 0:
                 console.log('cpu1 wins with a ' + winnerHandType);
+                alert('cpu1 wins with a ' + winnerHandType);
                 break;
             case 1:
                 console.log('cpu2 wins with a ' + winnerHandType);
+                alert('cpu2 wins with a ' + winnerHandType);
                 break;
             case 2:
                 console.log('cpu3 wins with a ' + winnerHandType);
+                alert('cpu3 wins with a ' + winnerHandType);
                 break;
             case 3:
                 console.log('player wins with a ' + winnerHandType);
+                alert('player wins with a ' + winnerHandType);
                 break;
         }
     } //more than one player had the winning hand type, tiebreaker required
     else {
         playersWithBestHandType = 0;
+        winningPlayersIndex = [];
         for (i=0;i<4;i++){
             if (handValues[i] == bestCombo){
                 playersWithBestHandType += 1;
+                winningPlayersIndex.push(i);
             }
         };
         console.log(playersWithBestHandType + " players have a " + winnerHandType);
         console.log("tiebreaker required");
+        alert(playersWithBestHandType + " players have a " + winnerHandType + " ,tiebreaker required");
     }
 }
-
-function tiebreaker(){
-    
-}
-
 
 
 
@@ -525,4 +528,14 @@ function getWinnerHandType(bestComboValue){
             break;
     }
     return winningHand;
+}
+
+
+function showCards(){
+    for (i=0;i<order.length;i++){
+        firstCardName = document.getElementById(order[i]).firstChild.id;
+        document.getElementById(order[i]).firstChild.setAttribute("src","/static/img/"+firstCardName+".png");
+        secondCardName = document.getElementById(order[i]).lastChild.id;
+        document.getElementById(order[i]).lastChild.setAttribute("src","/static/img/"+secondCardName+".png");
+    }
 }
