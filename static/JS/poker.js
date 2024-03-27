@@ -258,7 +258,7 @@ function showFifthCard(){
 function revealCards(){
     showCards(); 
     [cpu1,cpu2,cpu3,player] = evaluateHands();
-    getWinner(cpu1,cpu2,cpu3,player);
+    winner = getWinner(cpu1,cpu2,cpu3,player);
 }
 
 function putBetsInBank(){
@@ -454,24 +454,29 @@ function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as pa
     handValues = [cpu1, cpu2, cpu3, player];
     bestCombo = Math.max(...handValues); //finds highest hand value out of players.
     winnerHandType = getWinnerHandType(bestCombo); //String of winning hand type (e.g. 'Royal Flush).
+    winner = 'undetermined';
     //check whether there is more than one player with the best hand type.
     if (handValues.indexOf(bestCombo) == handValues.lastIndexOf(bestCombo)){
         switch (handValues.indexOf(bestCombo)){
             case 0:
                 console.log('cpu1 wins with a ' + winnerHandType);
                 alert('cpu1 wins with a ' + winnerHandType);
+                winner = 'cpu1';
                 break;
             case 1:
                 console.log('cpu2 wins with a ' + winnerHandType);
                 alert('cpu2 wins with a ' + winnerHandType);
+                winner = 'cpu2';
                 break;
             case 2:
                 console.log('cpu3 wins with a ' + winnerHandType);
                 alert('cpu3 wins with a ' + winnerHandType);
+                winner = 'cpu3';
                 break;
             case 3:
                 console.log('player wins with a ' + winnerHandType);
                 alert('player wins with a ' + winnerHandType);
+                winner = 'player';
                 break;
         }
     } //more than one player had the winning hand type, tiebreaker required
@@ -488,6 +493,7 @@ function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as pa
         console.log("tiebreaker required");
         alert(playersWithBestHandType + " players have a " + winnerHandType + " ,tiebreaker required");
     }
+    return winner;
 }
 
 
