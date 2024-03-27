@@ -24,7 +24,7 @@ function shuffle(){
     }
     console.log(shuffledDeck);
     deck = shuffledDeck;
-    document.getElementById('playButton').style.display('block');
+    document.getElementById('playButton').style.display = 'block'; //make visible
 }
 
 //deals a card face up
@@ -256,7 +256,7 @@ function showFifthCard(){
     roundsPlayed = 0;
 }
 function revealCards(){
-    //not sure on this one yet
+    evaluateHands();
 }
 
 function putBetsInBank(){
@@ -269,28 +269,33 @@ function putBetsInBank(){
     document.querySelectorAll('.bet').forEach(e=> e.innerHTML = 0);
 }
 
-function evaluateHand(){
+function evaluateHands(){
+
+    //player's hand value defaulted to 0 if they have folded
+    playerHandValue = 0;
+    cpu1HandValue = 0;
+    cpu2HandValue = 0;
+    cpu3HandValue = 0;
+
     for (i=0;i<order.length;i++){
+        //player's hand value increased if still in game.
         if (order[i] == 'player'){
             player7Cards = playerHand.concat(cardsOnTable);
-            findBestCombo(player7Cards);
-            console.log("player");
+            playerHandValue = findBestCombo(player7Cards);
         } else if(order[i] == 'cpu1'){
             cpu17Cards = cpu1Hand.concat(cardsOnTable);
-            findBestCombo(cpu17Cards);
-            console.log("cpu1");
+            cpu1HandValue = findBestCombo(cpu17Cards);
         } else if(order[i] == 'cpu2'){
             cpu27Cards = cpu2Hand.concat(cardsOnTable);
-            findBestCombo(cpu27Cards);
-            console.log("cpu2");
+            cpu2HandValue = findBestCombo(cpu27Cards);
         } else {
             cpu37Cards = cpu3Hand.concat(cardsOnTable);
-            findBestCombo(cpu37Cards);
-            console.log("cpu3");
+            cpu3HandValue = findBestCombo(cpu37Cards);
         }
+        getWinner();
     }
-}
 
+}
 
 function findBestCombo(seventhStreet){
     diamonds = 0;
@@ -440,4 +445,84 @@ function findBestCombo(seventhStreet){
         console.log('High Card!')
         handValue = 1;
     }
+    return handValue;
+}
+
+function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as parameters
+    handValues = [cpu1, cpu2, cpu3, player];
+    bestCombo = Math.max(...handValues); //finds highest hand value out of players.
+    winnerHandType = getWinnerHandType(bestCombo); //String of winning hand type (e.g. 'Royal Flush).
+    //check whether there is more than one player with the best hand type.
+    if (handValues.indexOf(bestCombo) == handValues.lastIndexOf(bestCombo)){
+        switch (handValues.indexOf(bestCombo)){
+            case 0:
+                console.log('cpu1 wins with a ' + winnerHandType);
+                break;
+            case 1:
+                console.log('cpu2 wins with a ' + winnerHandType);
+                break;
+            case 2:
+                console.log('cpu3 wins with a ' + winnerHandType);
+                break;
+            case 3:
+                console.log('player wins with a ' + winnerHandType);
+                break;
+        }
+    } //more than one player had the winning hand type, tiebreaker required
+    else {
+        playersWithBestHandType = 0;
+        for (i=0;i<4;i++){
+            if (handValues[i] == bestCombo){
+                playersWithBestHandType += 1;
+            }
+        };
+        console.log(playersWithBestHandType + " players have a " + winnerHandType);
+        console.log("tiebreaker required");
+    }
+}
+
+function tiebreaker(){
+    
+}
+
+
+
+
+
+
+function getWinnerHandType(bestComboValue){
+    winningHand = '';
+    switch (bestComboValue){
+        case 10:
+            winningHand = 'Royal Flush';
+            break;
+        case 9:
+            winningHand = 'Straight Flush';
+            break;
+        case 8:
+            winningHand = 'Four of a kind';
+            break;
+        case 7:
+            winningHand = 'Full House';
+            break;
+        case 6:
+            winningHand = 'Flush';
+            break;
+        case 5:
+            winningHand = 'Straight';
+            break;
+        case 4:
+            winningHand = 'Three of a kind';
+            break;
+        case 3:
+            winningHand = 'Two pair';
+            break;
+        case 2:
+            winningHand = 'Pair';
+            break;
+        case 1:
+            winningHand = 'High Card';
+            break;
+    }
+    return winningHand;
 }
