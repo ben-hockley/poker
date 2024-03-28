@@ -408,6 +408,7 @@ function findBestCombo(seventhStreet){
         console.log('Full House!');
         handValue = 7;
         type = numbers.lastIndexOf(3);
+        type2 = numbers.IndexOf(2);
     }
     //Flush? = 6
     else if (Math.max(...suits) >= 5){
@@ -430,32 +431,45 @@ function findBestCombo(seventhStreet){
         ){
         console.log('Straight!');
         handValue = 5;
-        type = 69;//placefiller
+        //type for tiebreakers
+        if (Math.min(...numbers.slice(0,4)) == 1 && numbers[12] > 0) type = 0; //weakest straight
+        if (Math.min(...numbers.slice(0,5)) == 1) type = 1;
+        if (Math.min(...numbers.slice(1,6)) == 1) type = 2;
+        if (Math.min(...numbers.slice(2,7)) == 1) type = 3;
+        if (Math.min(...numbers.slice(3,8)) == 1) type = 4;
+        if (Math.min(...numbers.slice(4,9)) == 1) type = 5;
+        if (Math.min(...numbers.slice(5,10)) == 1) type = 6;
+        if (Math.min(...numbers.slice(6,11)) == 1) type = 7;
+        if (Math.min(...numbers.slice(7,12)) == 1) type = 8;
+        if (Math.min(...numbers.slice(8,13)) == 1) type = 9; //strongest straight
     }
     //Three of a kind? = 4
     else if (Math.max(...numbers) == 3){
         console.log('3 of a kind!');
         handValue = 4;
         type = numbers.indexOf(3);
+        type2 = numbers.lastIndexOf(1); //high card
     }
     //Two pair? = 3
     else if (Math.max(...numbers) == 2 && numbers.findIndex(x=>x==2) != numbers.findLastIndex(x=>x==2)){
         console.log('Two Pair!');
         handValue = 3;
-        type = numbers.lastIndexOf(2);
+        type = numbers.lastIndexOf(2); //higher pair
+        type2 = numbers.indexOf(2); //lower pair
     }
     //Pair? = 2
     else if (Math.max(...numbers) == 2){
         console.log('Pair!');
         handValue = 2;
         type = numbers.indexOf(2); //higher index = better pair (Ace=12 is best)
+        type2 = numbers.lastIndexOf(1); //high card
     }
     //High Card = 1
     else {
         console.log('High Card!');
         handValue = 1;
     }
-    return [handValue,type];
+    return [handValue,type,type2];
 }
 
 function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as parameters
