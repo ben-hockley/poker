@@ -530,10 +530,6 @@ function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as pa
     return winner;
 }
 
-
-
-
-
 function getWinnerHandType(bestComboValue){
     winningHand = '';
     switch (bestComboValue){
@@ -578,61 +574,5 @@ function showCards(){
         document.getElementById(order[i]).firstChild.setAttribute("src","/static/img/"+firstCardName+".png");
         secondCardName = document.getElementById(order[i]).lastChild.id;
         document.getElementById(order[i]).lastChild.setAttribute("src","/static/img/"+secondCardName+".png");
-    }
-}
-
-//tiebreakers
-function tiebreaker(winningHandValue, winningPlayers, indexes){ 
-    //winningHandValue = Value of winning Hand type (e.g. Royal Flush = 10)
-    //winningPlayers = 2DArray of winning players' 7 cards.
-    //indexes = index of winning Players, corresponds to hands in winningPlayers.
-        // 0 = cpu1;
-        // 1 = cpu2;
-        // 2 = cpu3;
-        // 3 = player.
-    console.log("here is the winning players hands (7cards)")
-    console.log(winningPlayers);
-    switch(winningHandValue){
-        case 10:
-            //royal flush
-        case 9:
-            //straight flush
-        case 8:
-            //four of a kind
-        case 7:
-            //full house
-        case 6:
-            //flush
-        case 5:
-            //straight
-        case 4:
-            //three of a kind
-        case 3:
-            //two pair
-        case 2:
-            //pair
-        case 1:
-            //high card
-            //look for an ace
-    }
-}
-
-function getWinningPlayersHands(indexes){
-    winningPlayersHands = [];
-    for (i=0;i<indexes.length;i++){
-        switch (indexes[i]){
-            case 0:
-                winningPlayersHands.push(cpu17Cards);
-                break;
-            case 1:
-                winningPlayersHands.push(cpu27Cards);
-                break;
-            case 2:
-                winningPlayersHands.push(cpu37Cards);
-                break;
-            case 3:
-                winningPlayersHands.push(player7Cards);
-                break;
-        }
     }
 }
