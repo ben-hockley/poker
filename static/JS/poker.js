@@ -279,20 +279,21 @@ function evaluateHands(){
     cpu2HandValue = 0;
     cpu3HandValue = 0;
 
+
     for (i=0;i<order.length;i++){
         //player's hand value increased if still in game.
         if (order[i] == 'player'){
             player7Cards = playerHand.concat(cardsOnTable);
-            playerHandValue = findBestCombo(player7Cards);
+            playerHandValue = (findBestCombo(player7Cards))[0];
         } else if(order[i] == 'cpu1'){
             cpu17Cards = cpu1Hand.concat(cardsOnTable);
-            cpu1HandValue = findBestCombo(cpu17Cards);
+            cpu1HandValue = (findBestCombo(cpu17Cards))[0];
         } else if(order[i] == 'cpu2'){
             cpu27Cards = cpu2Hand.concat(cardsOnTable);
-            cpu2HandValue = findBestCombo(cpu27Cards);
+            cpu2HandValue = (findBestCombo(cpu27Cards))[0];
         } else {
             cpu37Cards = cpu3Hand.concat(cardsOnTable);
-            cpu3HandValue = findBestCombo(cpu37Cards);
+            cpu3HandValue = (findBestCombo(cpu37Cards))[0];
         }
     }
     return [cpu1HandValue,cpu2HandValue,cpu3HandValue,playerHandValue];
@@ -382,6 +383,7 @@ function findBestCombo(seventhStreet){
     console.log(numbers);
 
     var handValue; //Royal Flush = 10, Straight Flush = 9 etc.
+    var type; //used for tiebreakers, better type = better hand.
 
     //Royal Flush ? = 10 //this is faulty, fix it.
     if (
@@ -399,16 +401,19 @@ function findBestCombo(seventhStreet){
     else if (Math.max(...numbers) == 4){
         console.log('4 of a kind!');
         handValue = 8;
+        type = numbers.lastIndexOf(4);
     } 
     //Full house? = 7
     else if (Math.max(...numbers) == 3 && numbers.includes(2)){
         console.log('Full House!');
         handValue = 7;
+        type = numbers.lastIndexOf(3);
     }
     //Flush? = 6
     else if (Math.max(...suits) >= 5){
         console.log('Flush!');
         handValue = 6;
+        type = 69; //placefiller
     }
     //Straight? = 5
     else if (
@@ -425,28 +430,32 @@ function findBestCombo(seventhStreet){
         ){
         console.log('Straight!');
         handValue = 5;
+        type = 69;//placefiller
     }
     //Three of a kind? = 4
     else if (Math.max(...numbers) == 3){
         console.log('3 of a kind!');
         handValue = 4;
+        type = numbers.indexOf(3);
     }
     //Two pair? = 3
     else if (Math.max(...numbers) == 2 && numbers.findIndex(x=>x==2) != numbers.findLastIndex(x=>x==2)){
         console.log('Two Pair!');
         handValue = 3;
+        type = numbers.lastIndexOf(2);
     }
     //Pair? = 2
     else if (Math.max(...numbers) == 2){
         console.log('Pair!');
         handValue = 2;
+        type = numbers.indexOf(2); //higher index = better pair (Ace=12 is best)
     }
     //High Card = 1
     else {
-        console.log('High Card!')
+        console.log('High Card!');
         handValue = 1;
     }
-    return handValue;
+    return [handValue,type];
 }
 
 function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as parameters
@@ -456,41 +465,67 @@ function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as pa
     winner = 'undetermined';
     //check whether there is more than one player with the best hand type.
     if (handValues.indexOf(bestCombo) == handValues.lastIndexOf(bestCombo)){
-        switch (handValues.indexOf(bestCombo)){
-            case 0:
-                console.log('cpu1 wins with a ' + winnerHandType);
-                alert('cpu1 wins with a ' + winnerHandType);
-                winner = 'cpu1';
-                break;
-            case 1:
-                console.log('cpu2 wins with a ' + winnerHandType);
-                alert('cpu2 wins with a ' + winnerHandType);
-                winner = 'cpu2';
-                break;
-            case 2:
-                console.log('cpu3 wins with a ' + winnerHandType);
-                alert('cpu3 wins with a ' + winnerHandType);
-                winner = 'cpu3';
-                break;
-            case 3:
-                console.log('player wins with a ' + winnerHandType);
-                alert('player wins with a ' + winnerHandType);
-                winner = 'player';
-                break;
-        }
+        winningIndex = handValues.indexOf(bestCombo);
     } //more than one player had the winning hand type, tiebreaker required
     else {
         playersWithBestHandType = 0;
-        winningPlayersIndex = [];
+        winningPlayersIndexes = [];
+        winningPlayersTypes = [];
         for (i=0;i<4;i++){
             if (handValues[i] == bestCombo){
                 playersWithBestHandType += 1;
-                winningPlayersIndex.push(i);
+                winningPlayersIndexes.push(i);
             }
         };
         console.log(playersWithBestHandType + " players have a " + winnerHandType);
         console.log("tiebreaker required");
         alert(playersWithBestHandType + " players have a " + winnerHandType + " ,tiebreaker required");
+
+        for (i=0;i<winningPlayersIndexes.length;i++){
+            switch (winningPlayersIndexes[i]){
+                case 0:
+                    winnersType = (findBestCombo(cpu17Cards))[0]
+                    winningPlayersTypes.push(winnersType);
+                    break;
+                case 1:
+                    winnersType = (findBestCombo(cpu27Cards))[0]
+                    winningPlayersTypes.push(winnersType);
+                    break;
+                case 2:
+                    winnersType = (findBestCombo(cpu37Cards))[0]
+                    winningPlayersTypes.push(winnersType);
+                    break;
+                case 3:
+                    winnersType = (findBestCombo(player7Cards))[0]
+                    winningPlayersTypes.push(winnersType);
+                    break;
+            }
+        }
+        bestType = Math.max(...winningPlayersTypes);
+        bestTypeListIndex = winningPlayersTypes.indexOf(bestType);
+        winningIndex = winningPlayersIndexes[bestTypeListIndex];
+    }
+    switch (winningIndex){
+        case 0:
+            console.log('cpu1 wins with a ' + winnerHandType);
+            alert('cpu1 wins with a ' + winnerHandType);
+            winner = 'cpu1';
+            break;
+        case 1:
+            console.log('cpu2 wins with a ' + winnerHandType);
+            alert('cpu2 wins with a ' + winnerHandType);
+            winner = 'cpu2';
+            break;
+        case 2:
+            console.log('cpu3 wins with a ' + winnerHandType);
+            alert('cpu3 wins with a ' + winnerHandType);
+            winner = 'cpu3';
+            break;
+        case 3:
+            console.log('player wins with a ' + winnerHandType);
+            alert('player wins with a ' + winnerHandType);
+            winner = 'player';
+            break;
     }
     return winner;
 }
@@ -543,5 +578,61 @@ function showCards(){
         document.getElementById(order[i]).firstChild.setAttribute("src","/static/img/"+firstCardName+".png");
         secondCardName = document.getElementById(order[i]).lastChild.id;
         document.getElementById(order[i]).lastChild.setAttribute("src","/static/img/"+secondCardName+".png");
+    }
+}
+
+//tiebreakers
+function tiebreaker(winningHandValue, winningPlayers, indexes){ 
+    //winningHandValue = Value of winning Hand type (e.g. Royal Flush = 10)
+    //winningPlayers = 2DArray of winning players' 7 cards.
+    //indexes = index of winning Players, corresponds to hands in winningPlayers.
+        // 0 = cpu1;
+        // 1 = cpu2;
+        // 2 = cpu3;
+        // 3 = player.
+    console.log("here is the winning players hands (7cards)")
+    console.log(winningPlayers);
+    switch(winningHandValue){
+        case 10:
+            //royal flush
+        case 9:
+            //straight flush
+        case 8:
+            //four of a kind
+        case 7:
+            //full house
+        case 6:
+            //flush
+        case 5:
+            //straight
+        case 4:
+            //three of a kind
+        case 3:
+            //two pair
+        case 2:
+            //pair
+        case 1:
+            //high card
+            //look for an ace
+    }
+}
+
+function getWinningPlayersHands(indexes){
+    winningPlayersHands = [];
+    for (i=0;i<indexes.length;i++){
+        switch (indexes[i]){
+            case 0:
+                winningPlayersHands.push(cpu17Cards);
+                break;
+            case 1:
+                winningPlayersHands.push(cpu27Cards);
+                break;
+            case 2:
+                winningPlayersHands.push(cpu37Cards);
+                break;
+            case 3:
+                winningPlayersHands.push(player7Cards);
+                break;
+        }
     }
 }
