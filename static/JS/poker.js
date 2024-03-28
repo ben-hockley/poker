@@ -502,8 +502,12 @@ function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as pa
             }
         }
         bestType = Math.max(...winningPlayersTypes);
-        bestTypeListIndex = winningPlayersTypes.indexOf(bestType);
-        winningIndex = winningPlayersIndexes[bestTypeListIndex];
+        if (winningPlayersTypes.indexOf(bestType) == winningPlayersTypes.lastIndexOf(bestType)){
+            bestTypeListIndex = winningPlayersTypes.indexOf(bestType);
+            winningIndex = winningPlayersIndexes[bestTypeListIndex];
+        } else {
+            winningIndex = null;
+        }
     }
     switch (winningIndex){
         case 0:
@@ -525,6 +529,10 @@ function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as pa
             console.log('player wins with a ' + winnerHandType);
             alert('player wins with a ' + winnerHandType);
             winner = 'player';
+            break;
+        default:
+            console.log("couldn't determine winner");
+            alert("we couldn't determine which hand won this time, fix coming soon");
             break;
     }
     return winner;
