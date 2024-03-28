@@ -6,13 +6,6 @@ deck = [
     '2D','3D','4D','5D','6D','7D','8D','9D','TD','JD','QD','KD','AD'
 ]
 
-//4 player game
-//Arrays for player and CPU hands
-playerHand = [];
-cpu1Hand = [];
-cpu2Hand = [];
-cpu3Hand = [];
-cardsOnTable = [];
 
 //shuffles deck on page load.
 function shuffle(){ 
@@ -54,9 +47,7 @@ function cardFaceDown(container, arrayName){
 }
 
 //turns go round in circle
-order = ['cpu1', 'cpu2', 'cpu3', 'player'];
-bet = [0, 0, 5, 10]; //value each player has bet, values removed similarly to order array as game progresses.
-var turn = 0; //index of order, bet arrays (cpu1 starts)
+var turn = 3; //index of order, bet arrays (cpu1 starts)
 var roundsPlayed = 0; //counts rounds played 
 var roundsPlayedIncrementer = 0.25; //value to add to rounds played upon check (depends on number of players still in)
 
@@ -68,6 +59,8 @@ var cpu1Chips = 100; //first to play
 var cpu2Chips = 100;
 var cpu3Chips = 95; //small blind (5)
 var playerChips = 90; //big blind (10)
+
+chipsArray = [cpu1Chips,cpu2Chips,cpu3Chips,playerChips];
 
 
 
@@ -100,6 +93,9 @@ function printBetsandChips(){
     }
 }
 
+
+var smallBlind = 1;
+var bigBlind = 2;
 //setup game by dealing hands and printing bets and chips to the table
 function setupGame(){
     playerHand = [];
@@ -108,18 +104,45 @@ function setupGame(){
     cpu3Hand = [];
     cardsOnTable = [];
 
+    roundsPlayed = 0;
+    roundsPlayedIncrementer = 0.25;
+
     document.getElementById('cpu1').innerHTML = '';
     document.getElementById('cpu2').innerHTML = '';
     document.getElementById('cpu3').innerHTML = '';
     document.getElementById('player').innerHTML = '';
 
     order = ['cpu1', 'cpu2', 'cpu3', 'player'];
-    bet = [0, 0, 5, 10];
+    bet = [0, 0, 0, 0];
+
+    if (smallBlind == 3){
+        smallBlind = 0;
+    } else {
+        smallBlind += 1;
+    }
+    bet[smallBlind] += 5;
+    chipsArray[smallBlind] -= 5;
+
+    if (bigBlind == 3){
+        bigBlind = 0;
+    } else {
+        bigBlind += 1;
+    }
+    bet[bigBlind] += 10;
+    chipsArray[bigBlind] -= 10;
+
+    if (turn == 3){
+        turn = 0;
+    } else {
+        turn += 1;
+    }
 
     document.getElementById('cpu1').style.backgroundColor = 'white';
     document.getElementById('cpu2').style.backgroundColor = 'white';
     document.getElementById('cpu3').style.backgroundColor = 'white';
     document.getElementById('player').style.backgroundColor = 'white';
+
+    document.getElementsByClassName('hand')[turn].style.backgroundColor = 'green';
 
 
     shuffle();
@@ -454,7 +477,7 @@ function findBestCombo(seventhStreet){
         console.log('Full House!');
         handValue = 7;
         type = numbers.lastIndexOf(3);
-        type2 = numbers.IndexOf(2);
+        type2 = numbers.indexOf(2);
     }
     //Flush? = 6
     else if (Math.max(...suits) >= 5){
