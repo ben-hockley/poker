@@ -24,7 +24,6 @@ function shuffle(){
     }
     console.log(shuffledDeck);
     deck = shuffledDeck;
-    document.getElementById('playButton').style.display = 'block'; //make visible
 }
 
 //deals a card face up
@@ -103,6 +102,27 @@ function printBetsandChips(){
 
 //setup game by dealing hands and printing bets and chips to the table
 function setupGame(){
+    playerHand = [];
+    cpu1Hand = [];
+    cpu2Hand = [];
+    cpu3Hand = [];
+    cardsOnTable = [];
+
+    document.getElementById('cpu1').innerHTML = '';
+    document.getElementById('cpu2').innerHTML = '';
+    document.getElementById('cpu3').innerHTML = '';
+    document.getElementById('player').innerHTML = '';
+
+    order = ['cpu1', 'cpu2', 'cpu3', 'player'];
+    bet = [0, 0, 5, 10];
+
+    document.getElementById('cpu1').style.backgroundColor = 'white';
+    document.getElementById('cpu2').style.backgroundColor = 'white';
+    document.getElementById('cpu3').style.backgroundColor = 'white';
+    document.getElementById('player').style.backgroundColor = 'white';
+
+
+    shuffle();
     dealHands();
     printBetsandChips();
     document.getElementById('playButton').style.display = 'none'; //hide play button
@@ -259,6 +279,32 @@ function revealCards(){
     showCards(); 
     [cpu1,cpu2,cpu3,player] = evaluateHands();
     winner = getWinner(cpu1,cpu2,cpu3,player);
+    //give chips in bank to the winner
+    if (winner){
+        switch (winner){
+            case 'cpu1':
+                cpu1Chips += bankBalance;
+                document.getElementById('cpu1Chips').innerHTML = cpu1Chips;
+                break;
+            case 'cpu2':
+                cpu2Chips += bankBalance;
+                document.getElementById('cpu2Chips').innerHTML = cpu2Chips;
+                break;
+            case 'cpu3':
+                cpu3Chips += bankBalance;
+                document.getElementById('cpu3Chips').innerHTML = cpu3Chips;
+                break;
+            case 'player':
+                playerChips += bankBalance;
+                document.getElementById('playerChips').innerHTML = playerChips;
+                break;
+
+        }
+        bankBalance = 0;
+        document.getElementById('bankBalance').innerHTML = bankBalance;
+    }
+    //show play button to start next game
+    document.getElementById('playButton').style.display = 'block';
 }
 
 function putBetsInBank(){
@@ -476,7 +522,6 @@ function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as pa
     handValues = [cpu1, cpu2, cpu3, player];
     bestCombo = Math.max(...handValues); //finds highest hand value out of players.
     winnerHandType = getWinnerHandType(bestCombo); //String of winning hand type (e.g. 'Royal Flush).
-    winner = 'undetermined';
     //check whether there is more than one player with the best hand type.
     if (handValues.indexOf(bestCombo) == handValues.lastIndexOf(bestCombo)){
         winningIndex = handValues.indexOf(bestCombo);
@@ -547,6 +592,7 @@ function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as pa
         default:
             console.log("couldn't determine winner");
             alert("we couldn't determine which hand won this time, fix coming soon");
+            winner = null;
             break;
     }
     return winner;
