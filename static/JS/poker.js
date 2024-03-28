@@ -469,7 +469,7 @@ function findBestCombo(seventhStreet){
         console.log('High Card!');
         handValue = 1;
     }
-    return [handValue,type,type2];
+    return [handValue,type];
 }
 
 function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as parameters
@@ -498,19 +498,19 @@ function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as pa
         for (i=0;i<winningPlayersIndexes.length;i++){
             switch (winningPlayersIndexes[i]){
                 case 0:
-                    winnersType = (findBestCombo(cpu17Cards))[0]
+                    winnersType = (findBestCombo(cpu17Cards))[1]
                     winningPlayersTypes.push(winnersType);
                     break;
                 case 1:
-                    winnersType = (findBestCombo(cpu27Cards))[0]
+                    winnersType = (findBestCombo(cpu27Cards))[1]
                     winningPlayersTypes.push(winnersType);
                     break;
                 case 2:
-                    winnersType = (findBestCombo(cpu37Cards))[0]
+                    winnersType = (findBestCombo(cpu37Cards))[1]
                     winningPlayersTypes.push(winnersType);
                     break;
                 case 3:
-                    winnersType = (findBestCombo(player7Cards))[0]
+                    winnersType = (findBestCombo(player7Cards))[1]
                     winningPlayersTypes.push(winnersType);
                     break;
             }
