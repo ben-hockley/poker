@@ -487,6 +487,8 @@ function findBestCombo(seventhStreet){
     ){
         console.log('Royal Flush!');
         handValue = 10;
+        type = 1;
+        type2 = 1;//placefillers
     }
     //Straight Flush? = 9 => Not sure on best way to do this.
     //Four of a kind? = 8
@@ -506,7 +508,8 @@ function findBestCombo(seventhStreet){
     else if (Math.max(...suits) >= 5){
         console.log('Flush!');
         handValue = 6;
-        type = 69; //placefiller
+        type = numbers.lastIndexOf(1); //high card
+        type2 = (numbers.splice(numbers.lastIndexOf(1),1)).lastIndexOf(1); //2nd highest card
     }
     //Straight? = 5
     else if (
@@ -534,6 +537,8 @@ function findBestCombo(seventhStreet){
         if (Math.min(...numbers.slice(6,11)) == 1) type = 7;
         if (Math.min(...numbers.slice(7,12)) == 1) type = 8;
         if (Math.min(...numbers.slice(8,13)) == 1) type = 9; //strongest straight
+
+        type2 = numbers.lastIndexOf(1); //high card
     }
     //Three of a kind? = 4
     else if (Math.max(...numbers) == 3){
@@ -560,8 +565,10 @@ function findBestCombo(seventhStreet){
     else {
         console.log('High Card!');
         handValue = 1;
+        type = numbers.lastIndexOf(1); //high card
+        type2 = (numbers.splice(numbers.lastIndexOf(1),1)).lastIndexOf(1); //2nd highest card
     }
-    return [handValue,type];
+    return [handValue,type,type2];
 }
 
 function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as parameters
