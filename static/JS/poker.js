@@ -185,6 +185,32 @@ function fold(){
     order.splice(turn,1)
     //remove player from array 'bet' so we do not take more chips from this player.
     bet.splice(turn,1)
+    if (order.length == 1){
+        alert(order[0] + ' wins');
+        switch (order[0]){
+            case 'cpu1':
+                cpu1Chips += bankBalance;
+                document.getElementById('cpu1Chips').innerHTML = cpu1Chips;
+                break;
+            case 'cpu2':
+                cpu2Chips += bankBalance;
+                document.getElementById('cpu2Chips').innerHTML = cpu2Chips;
+                break;
+            case 'cpu3':
+                cpu3Chips += bankBalance;
+                document.getElementById('cpu3Chips').innerHTML = cpu3Chips;
+                break;
+            case 'player':
+                playerChips += bankBalance;
+                document.getElementById('playerChips').innerHTML = playerChips;
+                break;
+        }
+        bankBalance = 0;
+        document.getElementById('bankBalance').innerHTML = bankBalance;
+    
+    //show play button to start next game
+    document.getElementById('playButton').style.display = 'block';
+    }
     if (turn == order.length){
         turn = 0;
     }
@@ -260,7 +286,6 @@ function raise(){
 function checkBetValue(orderIndex,textID){
 
     turnFinder = order.findIndex(getOrderIndex);
-    console.log(turnFinder);
 
     function getOrderIndex(index){
         return index == orderIndex;
@@ -288,32 +313,7 @@ function nextRoundMaybe(){
 var gameStage = 0;
 function applyGameStage(){
     roundsPlayedIncrementer = (1/order.length) + 0.01; //add 0.01 for 1/3 stage so roundsPlayed passes 1.
-    putBetsInBank();
-    if (order.length == 1){
-        alert(order[0] + ' wins');
-        switch (order[0]){
-            case 'cpu1':
-                cpu1Chips += bankBalance;
-                document.getElementById('cpu1Chips').innerHTML = cpu1Chips;
-                break;
-            case 'cpu2':
-                cpu2Chips += bankBalance;
-                document.getElementById('cpu2Chips').innerHTML = cpu2Chips;
-                break;
-            case 'cpu3':
-                cpu3Chips += bankBalance;
-                document.getElementById('cpu3Chips').innerHTML = cpu3Chips;
-                break;
-            case 'player':
-                playerChips += bankBalance;
-                document.getElementById('playerChips').innerHTML = playerChips;
-                break;
-        }
-        bankBalance = 0;
-        document.getElementById('bankBalance').innerHTML = bankBalance;
-    //show play button to start next game
-    document.getElementById('playButton').style.display = 'block';
-    } else {
+    putBetsInBank();    
     switch (gameStage){
         case 1:
             showFirstThreeCards();
@@ -329,8 +329,8 @@ function applyGameStage(){
             break;
             //end of game
     }
-    }
 }
+
 
 //Game stage 1
 function showFirstThreeCards(){
@@ -727,7 +727,6 @@ function getWinnerHandType(bestComboValue){
     }
     return winningHand;
 }
-
 
 function showCards(){
     for (i=0;i<order.length;i++){
