@@ -54,10 +54,8 @@ var bankBalance = 0;
 
 var cpu1Chips = 100; //first to play
 var cpu2Chips = 100;
-var cpu3Chips = 95; //small blind (5)
-var playerChips = 90; //big blind (10)
-
-chipsArray = [cpu1Chips,cpu2Chips,cpu3Chips,playerChips];
+var cpu3Chips = 100;
+var playerChips = 100;
 
 
 
@@ -120,7 +118,20 @@ function setupGame(){
         smallBlind += 1;
     }
     bet[smallBlind] += 5;
-    chipsArray[smallBlind] -= 5;
+    switch (smallBlind){
+        case 0:
+            cpu1Chips -= 5;
+            break;
+        case 1:
+            cpu2Chips -= 5;
+            break;
+        case 2:
+            cpu3Chips -= 5;
+            break;
+        case 3:
+            playerChips -= 5;
+            break;
+    }
 
     if (bigBlind == 3){
         bigBlind = 0;
@@ -128,7 +139,20 @@ function setupGame(){
         bigBlind += 1;
     }
     bet[bigBlind] += 10;
-    chipsArray[bigBlind] -= 10;
+    switch (bigBlind){
+        case 0:
+            cpu1Chips -= 10;
+            break;
+        case 1:
+            cpu2Chips -= 10;
+            break;
+        case 2:
+            cpu3Chips -= 10;
+            break;
+        case 3:
+            playerChips -= 10;
+            break;
+    }
 
     if (turn == 3){
         turn = 0;
