@@ -48,7 +48,6 @@ var turn = 3; //index of order, bet arrays (cpu1 starts)
 var roundsPlayed = 0; //counts rounds played 
 var roundsPlayedIncrementer = 0.25; //value to add to rounds played upon check (depends on number of players still in)
 
-
 // Bank
 var bankBalance = 0;
 
@@ -56,8 +55,6 @@ var cpu1Chips = 100; //first to play
 var cpu2Chips = 100;
 var cpu3Chips = 100;
 var playerChips = 100;
-
-
 
 //deal first two cards to each player
 //player cards visible (face up)
@@ -87,7 +84,6 @@ function printBetsandChips(){
         checkBetValue('player','playerBet');
     }
 }
-
 
 var smallBlind = 1;
 var bigBlind = 2;
@@ -167,15 +163,15 @@ function setupGame(){
 
     document.getElementsByClassName('hand')[turn].style.backgroundColor = 'green';
 
-
     shuffle();
     dealHands();
     printBetsandChips();
     document.getElementById('playButton').style.display = 'none'; //hide play button
+
+    if (order[turn] != 'player'){
+        cpuTurn();
+    }
 }
-
-
-
 
 //player controls
 function fold(){
@@ -210,14 +206,17 @@ function fold(){
     
     //show play button to start next game
     document.getElementById('playButton').style.display = 'block';
-    }
+    } else {
     if (turn == order.length){
         turn = 0;
     }
     document.getElementById(order[turn]).style.backgroundColor='Green';
     roundsPlayed += roundsPlayedIncrementer;
+    if (order[turn] != 'player'){
+        cpuTurn();
+    }
+    }
 }
-
 
 //implement a test to force user to either match the highest bet or fold
 function check(){
@@ -230,6 +229,9 @@ function check(){
     document.getElementById(order[turn]).style.backgroundColor = 'Green';
     roundsPlayed += roundsPlayedIncrementer;
     nextRoundMaybe(); //checks if all bets match and if they do, shows the next card/s.
+    if (order[turn] != 'player'){
+        cpuTurn();
+    }
     } else {
         alert("please match the bet or fold");
     }
@@ -298,7 +300,6 @@ function checkBetValue(orderIndex,textID){
     }
 }
 
-
 //starts next round of game if all users have either folded or matched the highest bet
 function nextRoundMaybe(){
     function checkBetsMatch(betAmount){
@@ -330,7 +331,6 @@ function applyGameStage(){
             //end of game
     }
 }
-
 
 //Game stage 1
 function showFirstThreeCards(){
@@ -390,13 +390,11 @@ function putBetsInBank(){
 }
 
 function evaluateHands(){
-
     //player's hand value defaulted to 0 (it will stay this way if folded)
     playerHandValue = 0;
     cpu1HandValue = 0;
     cpu2HandValue = 0;
     cpu3HandValue = 0;
-
 
     for (i=0;i<order.length;i++){
         //player's hand value increased if still in game.
@@ -610,7 +608,7 @@ function findBestCombo(seventhStreet){
 function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as parameters
     handValues = [cpu1, cpu2, cpu3, player];
     bestCombo = Math.max(...handValues); //finds highest hand value out of players.
-    winnerHandType = getWinnerHandType(bestCombo); //String of winning hand type (e.g. 'Royal Flush).
+    winnerHandType = getWinnerHandType(bestCombo); //String of winning hand type (e.g. 'Royal Flush').
     //check whether there is more than one player with the best hand type.
     if (handValues.indexOf(bestCombo) == handValues.lastIndexOf(bestCombo)){
         winningIndex = handValues.indexOf(bestCombo);
@@ -734,5 +732,28 @@ function showCards(){
         document.getElementById(order[i]).firstChild.setAttribute("src","/static/img/"+firstCardName+".png");
         secondCardName = document.getElementById(order[i]).lastChild.id;
         document.getElementById(order[i]).lastChild.setAttribute("src","/static/img/"+secondCardName+".png");
+    }
+}
+
+//CPU controls (currently has no logic, just random).
+//raise(), fold(), check()
+function cpuTurn(){
+    random = Math.random();
+    if (random >= 0.6){
+        //match highest bet
+        while (bet[turn] < Math.max(...bet)){
+            raise();
+        }
+        check();
+    } else if (random >= 0.1){
+        //raise above highest bet
+        while (bet[turn] < Math.max(...bet)){
+            raise();
+        }
+        raise();
+        check();
+    } else {
+        //fold
+        fold();
     }
 }
