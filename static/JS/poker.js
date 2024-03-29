@@ -496,6 +496,8 @@ function findBestCombo(seventhStreet){
         console.log('4 of a kind!');
         handValue = 8;
         type = numbers.lastIndexOf(4);
+        type2 = numbers.lastIndexOf(1);
+        type += type2/100;
     } 
     //Full house? = 7
     else if (Math.max(...numbers) == 3 && numbers.includes(2)){
@@ -503,13 +505,15 @@ function findBestCombo(seventhStreet){
         handValue = 7;
         type = numbers.lastIndexOf(3);
         type2 = numbers.indexOf(2);
+        type += type2/100;
     }
     //Flush? = 6
     else if (Math.max(...suits) >= 5){
         console.log('Flush!');
         handValue = 6;
         type = numbers.lastIndexOf(1); //high card
-        type2 = (numbers.splice(numbers.lastIndexOf(1),1)).lastIndexOf(1); //2nd highest card
+        type2 = (numbers.splice(type,1)).lastIndexOf(1); //2nd highest card
+        type += type2/100;
     }
     //Straight? = 5
     else if (
@@ -539,6 +543,7 @@ function findBestCombo(seventhStreet){
         if (Math.min(...numbers.slice(8,13)) == 1) type = 9; //strongest straight
 
         type2 = numbers.lastIndexOf(1); //high card
+        type += type2/100;
     }
     //Three of a kind? = 4
     else if (Math.max(...numbers) == 3){
@@ -546,6 +551,7 @@ function findBestCombo(seventhStreet){
         handValue = 4;
         type = numbers.indexOf(3);
         type2 = numbers.lastIndexOf(1); //high card
+        type += type2/100;
     }
     //Two pair? = 3
     else if (Math.max(...numbers) == 2 && numbers.findIndex(x=>x==2) != numbers.findLastIndex(x=>x==2)){
@@ -553,6 +559,7 @@ function findBestCombo(seventhStreet){
         handValue = 3;
         type = numbers.lastIndexOf(2); //higher pair
         type2 = numbers.indexOf(2); //lower pair
+        type += type2/100;
     }
     //Pair? = 2
     else if (Math.max(...numbers) == 2){
@@ -560,6 +567,8 @@ function findBestCombo(seventhStreet){
         handValue = 2;
         type = numbers.indexOf(2); //higher index = better pair (Ace=12 is best)
         type2 = numbers.lastIndexOf(1); //high card
+        type3 = (numbers.splice(type2, 1)).lastIndexOf(1); //2nd highest card
+        type += type2/100;
     }
     //High Card = 1
     else {
@@ -567,8 +576,9 @@ function findBestCombo(seventhStreet){
         handValue = 1;
         type = numbers.lastIndexOf(1); //high card
         type2 = (numbers.splice(numbers.lastIndexOf(1),1)).lastIndexOf(1); //2nd highest card
+        type += type2/100
     }
-    return [handValue,type,type2];
+    return [handValue,type];
 }
 
 function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as parameters
