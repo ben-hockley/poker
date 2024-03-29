@@ -289,6 +289,31 @@ var gameStage = 0;
 function applyGameStage(){
     roundsPlayedIncrementer = (1/order.length) + 0.01; //add 0.01 for 1/3 stage so roundsPlayed passes 1.
     putBetsInBank();
+    if (order.length == 1){
+        alert(order[0] + ' wins');
+        switch (order[0]){
+            case 'cpu1':
+                cpu1Chips += bankBalance;
+                document.getElementById('cpu1Chips').innerHTML = cpu1Chips;
+                break;
+            case 'cpu2':
+                cpu2Chips += bankBalance;
+                document.getElementById('cpu2Chips').innerHTML = cpu2Chips;
+                break;
+            case 'cpu3':
+                cpu3Chips += bankBalance;
+                document.getElementById('cpu3Chips').innerHTML = cpu3Chips;
+                break;
+            case 'player':
+                playerChips += bankBalance;
+                document.getElementById('playerChips').innerHTML = playerChips;
+                break;
+        }
+        bankBalance = 0;
+        document.getElementById('bankBalance').innerHTML = bankBalance;
+    //show play button to start next game
+    document.getElementById('playButton').style.display = 'block';
+    } else {
     switch (gameStage){
         case 1:
             showFirstThreeCards();
@@ -303,6 +328,7 @@ function applyGameStage(){
             revealCards();
             break;
             //end of game
+    }
     }
 }
 
