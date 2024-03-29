@@ -619,21 +619,25 @@ function getWinner(cpu1, cpu2, cpu3, player){ //player's hand values given as pa
             console.log('cpu1 wins with a ' + winnerHandType);
             alert('cpu1 wins with a ' + winnerHandType);
             winner = 'cpu1';
+            document.getElementById('cpu1').style.backgroundColor = 'gold';
             break;
         case 1:
             console.log('cpu2 wins with a ' + winnerHandType);
             alert('cpu2 wins with a ' + winnerHandType);
             winner = 'cpu2';
+            document.getElementById('cpu2').style.backgroundColor = 'gold';
             break;
         case 2:
             console.log('cpu3 wins with a ' + winnerHandType);
             alert('cpu3 wins with a ' + winnerHandType);
             winner = 'cpu3';
+            document.getElementById('cpu3').style.backgroundColor = 'gold';
             break;
         case 3:
             console.log('player wins with a ' + winnerHandType);
             alert('player wins with a ' + winnerHandType);
             winner = 'player';
+            document.getElementById('player').style.backgroundColor = 'gold';
             break;
         default:
             console.log("couldn't determine winner");
