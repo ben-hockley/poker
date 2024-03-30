@@ -1,0 +1,23 @@
+#hand-rankings{
+    width:100%;
+    font-family:Arial, Helvetica, sans-serif;
+    overflow-x:hidden;
+    overflow-y: scroll;
+    height:80vh;
+}
+.ranking{
+    height:20vh;
+    width:100%;
+    border:1px solid white;
+    background-color: black;
+    color:white;
+    display:flex;
+}
+#subtitle{
+    color:red;
+    width:100%;
+    text-align:center;
+    height:min-content;
+    background-color: black;
+    box-sizing: border-box;
+}
