@@ -209,6 +209,8 @@ function fold(){
     
     //show play button to start next game
     gameActive = false;
+
+    document.getElementById('playButton').innerHTML = 'Next Round';
     document.getElementById('playButton').style.display = 'block';
     } else {
     if (turn == order.length){
@@ -381,6 +383,7 @@ function revealCards(){
     }
     //show play button to start next game
     gameActive = false;
+    document.getElementById('playButton').innerHTML = 'Next Round';
     document.getElementById('playButton').style.display = 'block';
 }
 
