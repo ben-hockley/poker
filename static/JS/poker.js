@@ -1,3 +1,5 @@
+gameActive = true;
+
 //shuffles deck on page load.
 function shuffle(){ 
     deck = [
@@ -89,6 +91,7 @@ var smallBlind = 1;
 var bigBlind = 2;
 //setup game by dealing hands and printing bets and chips to the table
 function setupGame(){
+    gameActive = true;
     playerHand = [];
     cpu1Hand = [];
     cpu2Hand = [];
@@ -205,6 +208,7 @@ function fold(){
         document.getElementById('bankBalance').innerHTML = bankBalance;
     
     //show play button to start next game
+    gameActive = false;
     document.getElementById('playButton').style.display = 'block';
     } else {
     if (turn == order.length){
@@ -376,6 +380,7 @@ function revealCards(){
         document.getElementById('bankBalance').innerHTML = bankBalance;
     }
     //show play button to start next game
+    gameActive = false;
     document.getElementById('playButton').style.display = 'block';
 }
 
@@ -415,7 +420,7 @@ function evaluateHands(){
     return [cpu1HandValue,cpu2HandValue,cpu3HandValue,playerHandValue];
 }
 
-function findBestCombo(seventhStreet){
+function findBestCombo(currentCombo){
     diamonds = 0;
     hearts = 0;
     clubs = 0;
@@ -435,8 +440,8 @@ function findBestCombo(seventhStreet){
     queen = 0;
     king = 0;
 
-    for (j=0;j<7;j++){
-        switch (seventhStreet[j][0]){
+    for (j=0;j<currentCombo.length;j++){
+        switch (currentCombo[j][0]){
             case 'A':
                 ace += 1;
                 break;
@@ -477,7 +482,7 @@ function findBestCombo(seventhStreet){
                 king += 1;
                 break;
         }
-        switch (seventhStreet[j][1]){
+        switch (currentCombo[j][1]){
             case 'D':
                 diamonds += 1;
                 break;
@@ -501,6 +506,8 @@ function findBestCombo(seventhStreet){
     var handValue; //Royal Flush = 10, Straight Flush = 9 etc.
     var type; //used for tiebreakers, better type = better hand.
 
+    type2 = 0;
+    type3 = 0;
     //Royal Flush ? = 10 //this is faulty, fix it.
     if (
         //seventhStreet.includes('AD','KD','QD','JD','TD')||
@@ -600,7 +607,7 @@ function findBestCombo(seventhStreet){
         handValue = 1;
         type = numbers.lastIndexOf(1); //high card
         type2 = (numbers.splice(numbers.lastIndexOf(1),1)).lastIndexOf(1); //2nd highest card
-        type += type2/100
+        type += type2/100;
     }
     return [handValue,type];
 }
@@ -737,23 +744,58 @@ function showCards(){
 
 //CPU controls (currently has no logic, just random).
 //raise(), fold(), check()
+
 function cpuTurn(){
-    random = Math.random();
-    if (random >= 0.6){
-        //match highest bet
-        while (bet[turn] < Math.max(...bet)){
-            raise();
-        }
-        check();
-    } else if (random >= 0.1){
-        //raise above highest bet
-        while (bet[turn] < Math.max(...bet)){
-            raise();
-        }
-        raise();
-        check();
-    } else {
-        //fold
-        fold();
+    if (gameActive){
+    cpuTurnTestDelay = setTimeout(doCpuAction,1000);
     }
+};
+
+function cpuTurnTest(){
+    //setTimeout() will set a timer and once the timer runs out, the function will run. (Wilkins.J, freeCodeCamp)
+    cpuTurnTestDelay = setTimeout(doCpuAction,1000);
+};
+
+function doCpuAction(){
+    currentHandValue = cpuHandValue();
+    if (currentHandValue == 0){
+        //we'll sort this later
+    } else if (currentHandValue == 1){
+        if (bet[turn] < Math.max(...bet)){
+            fold();
+        } else {
+            check();
+        }
+    } else {
+        for (i=0;i<currentHandValue;i++){
+            raise();
+        }
+        if (bet[turn] < Math.max(...bet)){
+            fold();
+        } else {
+            check();
+        }
+    }
+}
+//hand value functions used to influence cpu's actions
+function cpuHandValue(){
+    switch (order[turn]){
+        case 'cpu1':
+            currentHand = cpu1Hand.concat(cardsOnTable);
+            break;
+        case 'cpu2':
+            currentHand = cpu2Hand.concat(cardsOnTable);
+            break;
+        case 'cpu3':
+            currentHand = cpu3Hand.concat(cardsOnTable);
+            break;
+    }
+    console.log(currentHand);
+    if (currentHand.length == 2){
+        currentHandValue = 0;
+    } else {
+        currentHandValue = (findBestCombo(currentHand))[0];
+    }
+    console.log(currentHandValue);
+    return(currentHandValue); //int representing current Hand value (10-1), 0 if no cards on table yet.
 }
