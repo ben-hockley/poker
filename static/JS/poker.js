@@ -759,32 +759,6 @@ function cpuTurnTest(){
     cpuTurnTestDelay = setTimeout(doCpuAction,1000);
 };
 
-function doCpuActiondisabled(){
-    currentHandValue = cpuHandValue();
-    if (currentHandValue == 0){
-        //match the highest bet
-        while (bet[turn] < Math.max(...bet)){
-            raise();
-        }
-        check();
-    } else if (currentHandValue == 1){
-        if (bet[turn] < Math.max(...bet)){
-            fold();
-        } else {
-            check();
-        }
-    } else {
-        for (i=0;i<currentHandValue;i++){
-            raise();
-        }
-        if (bet[turn] < Math.max(...bet)){
-            fold();
-        } else {
-            check();
-        }
-    }
-}
-
 function doCpuAction(){
     currentHandValue = cpuHandValue();
     bettingLimit = 0;
@@ -795,13 +769,14 @@ function doCpuAction(){
         }
         check();
     } else {
-        bettingLimit = currentHandValue*5;
+        randomVariable = Math.floor(Math.random()*4);  //random int between 0 and 3
+        bettingLimit = (currentHandValue+randomVariable)*5;
+        if (bettingLimit < Math.max(...bet) && bet[turn] < Math.max(...bet)){
+            fold();
+        } else {
         while (bet[turn] < bettingLimit){
             raise();
         }
-        if (bet[turn] < Math.max(...bet)){
-            fold();
-        } else {
             check();
         }
     }
