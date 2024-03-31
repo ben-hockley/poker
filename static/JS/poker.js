@@ -244,6 +244,7 @@ function check(){
 }
 
 function raise(){
+    if (checkNotBankrupt()){
     bet[turn] += 5; //add bet to player.
     activePlayer = order[turn];
     switch (activePlayer) {
@@ -288,9 +289,20 @@ function raise(){
             checkBetValue('player','playerBet');
             break;
     }
+    } else {
+        if (order[turn] == 'player'){
+            alert('no more chips!');
+        } else {
+            if (bet[turn] == Math.max(...bet)){
+                check();
+            } else {
+                fold();
+            }
+        }
+    }
 }
 function match(){
-    while (bet[turn] < Math.max(...bet)){
+    while (bet[turn] < Math.max(...bet) && checkNotBankrupt()){
         raise();
     }
 }
@@ -806,4 +818,32 @@ function cpuHandValue(){
     }
     console.log(currentHandValue);
     return(currentHandValue); //int representing current Hand value (10-1), 0 if no cards on table yet.
+}
+function checkNotBankrupt(){
+    switch(order[turn]){
+        case 'cpu1':
+            if (cpu1Chips == 0){
+                return false;
+            } else {
+                return true;
+            }
+        case 'cpu2':
+            if (cpu2Chips == 0){
+                return false;
+            } else {
+                return true;
+            }
+        case 'cpu3':
+            if (cpu3Chips == 0){
+                return false;
+            } else {
+                return true;
+            }
+        case 'player':
+            if (playerChips == 0){
+                return false;
+            } else {
+                return true;
+            }
+    }
 }
