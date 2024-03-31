@@ -66,6 +66,11 @@
     bottom:10%;
     right:35%;
 }
+#match{
+    position:fixed;
+    bottom:15%;
+    right:35%;
+}
 
 #cardsOnTheTable{
     position:absolute;

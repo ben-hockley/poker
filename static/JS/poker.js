@@ -289,7 +289,11 @@ function raise(){
             break;
     }
 }
-
+function match(){
+    while (bet[turn] < Math.max(...bet)){
+        raise();
+    }
+}
 //checks to see if all players have matched the bet
 function checkBetValue(orderIndex,textID){
 
